@@ -68,6 +68,7 @@ class Auth {
     try {
       _auth.signOut();
       toastMessage(message: 'Signed Out');
+      //when signout screen need to go to login screen
       Navigator.pushAndRemoveUntil<void>(
         context,
         MaterialPageRoute<void>(builder: (BuildContext context) => const Login()),

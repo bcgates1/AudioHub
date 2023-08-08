@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:audiohub/controllers/payment_selector/payment_selector.dart';
 import 'package:audiohub/views/checkout/widgets/payment_tiles.dart';
 import 'package:audiohub/views/core/style.dart';
@@ -18,7 +16,6 @@ class PaymentPart extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: kwidth * 0.05),
       child: Consumer<PaymentSelector>(
         builder: (context, selector, child) {
-          log('message');
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

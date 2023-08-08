@@ -20,7 +20,7 @@ class AddToCartAlert extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Text(
-              'Titan watch',
+              'Sony WH-1000XM5',
               style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: Colors.black),
             ),
             Row(
@@ -55,7 +55,7 @@ class AddToCartAlert extends StatelessWidget {
                   style: GoogleFonts.inter(color: Colors.black),
                 ),
                 Text(
-                  ' ₹799',
+                  ' ₹28990',
                   style: GoogleFonts.inter(color: Colors.black),
                 )
               ],
