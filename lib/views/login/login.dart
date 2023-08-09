@@ -1,7 +1,8 @@
 import 'dart:developer';
 
-import 'package:audiohub/service/firebase/auth_firebase.dart';
+import 'package:audiohub/service/firebase/authentication.dart';
 import 'package:audiohub/views/common_widgets/toast.dart';
+import 'package:audiohub/views/core/style.dart';
 import 'package:audiohub/views/signup/signup.dart';
 import 'package:audiohub/views/signup/signup_widgets.dart';
 import 'package:flutter/material.dart';
@@ -72,9 +73,9 @@ class _LoginState extends State<Login> {
                       onPressed: () {
                         if (loginInputEmail.text.trim().isEmpty ||
                             loginInputPassword.text.trim().isEmpty) {
-                          // ScaffoldMessenger.of(context).showSnackBar(
-                          //     const SnackBar(content: Text('Please fill all the fields')));
-                          toastMessage(message: 'Please fill all the fields');
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Please fill all the fields')));
+                          // toastMessage(message: 'Please fill all the fields');
                         } else {
                           Auth(context: context).signinwithemail(
                               email: loginInputEmail.text.trim(),
@@ -91,15 +92,16 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-                const Spacer(),
+                SizedBox(
+                  height: kheight * 0.01,
+                ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 0.08,
                   child: SignInButton(
                       buttonType: ButtonType.google,
                       onPressed: () {
-                        //Google login
-                        log('Google login');
+                        Auth(context: context).signwithgoogle();
                       }),
                 ),
                 Expanded(

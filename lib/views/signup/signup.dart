@@ -1,4 +1,4 @@
-import 'package:audiohub/service/firebase/auth_firebase.dart';
+import 'package:audiohub/service/firebase/authentication.dart';
 import 'package:audiohub/views/signup/signup_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';

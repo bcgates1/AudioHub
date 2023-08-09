@@ -14,7 +14,14 @@ class SearchFoundGrid extends StatelessWidget {
           crossAxisSpacing: 5,
           mainAxisSpacing: 5),
       padding: const EdgeInsets.all(5),
-      itemBuilder: (context, index) => ItemCard(imagepath: imgpath, discount: 70, price: 28990),
+      itemBuilder: (context, index) => ItemCard(
+        imagepath: imgpath,
+        discount: 70,
+        price: 28990,
+        category: '',
+        name: '',
+        productId: '',
+      ),
       itemCount: 10,
     );
   }

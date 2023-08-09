@@ -23,7 +23,7 @@ class CartAddmore extends StatelessWidget {
                 Navigator.of(context).pop();
               },
               style: const ButtonStyle(
-                  shape: MaterialStatePropertyAll(ContinuousRectangleBorder()),
+                  // shape: MaterialStatePropertyAll(ContinuousRectangleBorder()),
                   backgroundColor: MaterialStatePropertyAll(Colors.black)),
               child: Row(
                 children: [
@@ -35,9 +35,7 @@ class CartAddmore extends StatelessWidget {
                   const SizedBox(
                     width: 8,
                   ),
-                  Text('Add more',
-                      style:
-                          GoogleFonts.inter(color: Colors.white, fontSize: 14)),
+                  Text('Add more', style: GoogleFonts.inter(color: Colors.white, fontSize: 14)),
                 ],
               ),
             )

@@ -14,7 +14,7 @@ class Cart extends StatelessWidget {
       body: Column(
         children: [
           CartAddmore(),
-          Expanded(child: CartItems()),
+          Flexible(child: CartItems()),
           CartCheckOut(),
         ],
       ),

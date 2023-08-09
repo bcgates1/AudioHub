@@ -1,4 +1,5 @@
 import 'package:audiohub/controllers/payment_selector/payment_selector.dart';
+import 'package:audiohub/controllers/wishlist/wishlist_controller.dart';
 import 'package:audiohub/views/core/style.dart';
 import 'package:audiohub/views/splashscreen/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,10 +23,15 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => PaymentSelector(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => WishListController(),
+        ),
       ],
       child: MaterialApp(
-        theme: ThemeData(useMaterial3: true),
+        theme: ThemeData(
+          useMaterial3: true,
+        ),
         debugShowCheckedModeBanner: false,
         home: const SplashScreen(),
       ),

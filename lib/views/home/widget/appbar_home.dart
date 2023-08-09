@@ -17,7 +17,7 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
       ),
       leadingWidth: kwidth * 0.15,
       title: Text(
-        'Shop',
+        'AUDIOHUB',
         style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: Colors.black),
       ),
       actions: [

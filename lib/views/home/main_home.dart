@@ -1,6 +1,6 @@
 import 'package:audiohub/views/home/headphone.dart';
 import 'package:audiohub/views/home/neckband.dart';
-import 'package:audiohub/views/home/home.dart';
+import 'package:audiohub/views/home/all_screen.dart';
 import 'package:audiohub/views/home/tws.dart';
 import 'package:audiohub/views/home/widget/appbar_home.dart';
 import 'package:audiohub/views/home/widget/drawer_home.dart';

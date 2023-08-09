@@ -14,7 +14,8 @@ class HomeDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      width: MediaQuery.of(context).size.width * 0.4,
+      width: MediaQuery.of(context).size.width * 0.6,
+      surfaceTintColor: const Color.fromARGB(255, 5, 121, 215),
       child: SizedBox(
         child: ListView(
           children: [

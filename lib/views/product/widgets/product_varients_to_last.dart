@@ -10,33 +10,34 @@ class ProductVarientsToLast extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _titletext('Available colors'),
-        SizedBox(height: kheight * 0.01),
-        GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4,
-              mainAxisExtent: kheight * 0.045,
-              crossAxisSpacing: kheight * 0.005,
-              mainAxisSpacing: kheight * 0.005),
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) => Center(
-            child: Container(
-                decoration: BoxDecoration(
-                    color: index == 3 ? const Color.fromARGB(255, 151, 205, 255) : Colors.black,
-                    borderRadius: BorderRadius.circular(15)),
-                child: Center(
-                  child: Text(
-                    varients[index],
-                    style: GoogleFonts.inter(color: Colors.white),
-                  ),
-                )),
-          ),
-          itemCount: varients.length,
-        ),
+        // _titletext('Available colors'),
+        // SizedBox(height: kheight * 0.01),
+        // GridView.builder(
+        //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        //       crossAxisCount: 4,
+        //       mainAxisExtent: kheight * 0.045,
+        //       crossAxisSpacing: kheight * 0.005,
+        //       mainAxisSpacing: kheight * 0.005),
+        //   shrinkWrap: true,
+        //   physics: const NeverScrollableScrollPhysics(),
+        //   itemBuilder: (context, index) => Center(
+        //     child: Container(
+        //       decoration: BoxDecoration(
+        //           color: index == 3 ? const Color.fromARGB(255, 151, 205, 255) : Colors.black,
+        //           borderRadius: BorderRadius.circular(15)),
+        //       child: Center(
+        //         child: Text(
+        //           varients[index],
+        //           style: GoogleFonts.inter(color: Colors.white),
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        //   itemCount: varients.length,
+        // ),
         SizedBox(height: kheight * 0.01),
         Text(
-          'Review',
+          'Reviews',
           style: GoogleFonts.inter(color: Colors.black),
         ),
         ListView.builder(

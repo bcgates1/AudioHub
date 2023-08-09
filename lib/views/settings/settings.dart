@@ -1,4 +1,4 @@
-import 'package:audiohub/service/firebase/auth_firebase.dart';
+import 'package:audiohub/service/firebase/authentication.dart';
 import 'package:audiohub/views/common_widgets/appbar.dart';
 import 'package:audiohub/views/core/style.dart';
 import 'package:audiohub/views/settings/widgets/settings_tile.dart';

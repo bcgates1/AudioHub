@@ -12,6 +12,7 @@ class Auth {
   final BuildContext context;
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   signupwithemailid(
       {required String email, required String password, required String username}) async {
     try {
@@ -38,6 +39,8 @@ class Auth {
       if (e.message == 'The email address is badly formatted.') {
         toastMessage(message: 'User not found');
         // toastMessage(message: e.message.toString());
+      } else {
+        toastMessage(message: e.message.toString());
       }
     }
   }

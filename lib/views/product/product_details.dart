@@ -1,3 +1,4 @@
+import 'package:audiohub/service/firebase/fetchdata.dart';
 import 'package:audiohub/views/checkout/checkout.dart';
 import 'package:audiohub/views/common_widgets/appbar.dart';
 import 'package:audiohub/views/core/style.dart';
@@ -7,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProductDetails extends StatelessWidget {
-  const ProductDetails({super.key});
+  const ProductDetails({super.key, required this.productId});
+  final String productId;
 
   @override
   Widget build(BuildContext context) {
@@ -15,37 +17,43 @@ class ProductDetails extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: const AppbarCom(title: 'Product'),
-        body: Column(
-          children: [
-            const ProductScrollingPart(),
-            SizedBox(
-              height: kheight * 0.08,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) => const CheckOutScrn()));
-                    },
-                    style: _buttonstyle(),
-                    child: _buttonchild('BUY NOW'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => const AddToCartAlert(),
-                      );
-                    },
-                    style: _buttonstyle(),
-                    child: _buttonchild('ADD TO CART'),
+        body: FutureBuilder(
+            future: FetchDataFirebase.fetchProductWithId(productId: productId),
+            builder: (context, snapshot) => snapshot.hasData
+                ? Column(
+                    children: [
+                       ProductScrollingPart(snapshot: snapshot,),
+                      SizedBox(
+                        height: kheight * 0.08,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                    MaterialPageRoute(builder: (context) => const CheckOutScrn()));
+                              },
+                              style: _buttonstyle(),
+                              child: _buttonchild('BUY NOW'),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => const AddToCartAlert(),
+                                );
+                              },
+                              style: _buttonstyle(),
+                              child: _buttonchild('ADD TO CART'),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
                   )
-                ],
-              ),
-            ),
-          ],
-        ),
+                : const Center(
+                    child: CircularProgressIndicator(),
+                  )),
       ),
     );
   }
@@ -60,12 +68,14 @@ class ProductDetails extends StatelessWidget {
 
   Widget _buttonchild(String text) {
     return SizedBox(
-        height: kheight * 0.06,
-        width: kwidth * 0.27,
-        child: Center(
-            child: Text(
+      height: kheight * 0.06,
+      width: kwidth * 0.28,
+      child: Center(
+        child: Text(
           text,
           style: GoogleFonts.inter(color: Colors.white, fontWeight: FontWeight.bold),
-        )));
+        ),
+      ),
+    );
   }
 }

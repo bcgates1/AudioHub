@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProductDeliveryAndDetails extends StatelessWidget {
-  const ProductDeliveryAndDetails({super.key});
+  const ProductDeliveryAndDetails({super.key, required this.brand, required this.connectionType});
+  final String brand;
+  final String connectionType;
 
   @override
   Widget build(BuildContext context) {
@@ -36,17 +38,17 @@ class ProductDeliveryAndDetails extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _detailtext('Brand  ', true),
-                _detailtext('Model Name', true),
+                _detailtext('Connectivity ', true),
               ],
             ),
             SizedBox(
-              width: kwidth * 0.15,
+              width: kwidth * 0.05,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _detailtext('Sony', false),
-                _detailtext('WH1000XM5/BMIN', false),
+                _detailtext(brand, false),
+                _detailtext(connectionType, false),
               ],
             ),
           ],
@@ -60,7 +62,7 @@ class ProductDeliveryAndDetails extends StatelessWidget {
       SizedBox(height: kheight * 0.01),
       Text(
         text,
-        style: GoogleFonts.inter(color: Colors.black),
+        style: GoogleFonts.inter(color: Colors.black, fontSize: 15),
       )
     ]);
   }
