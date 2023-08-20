@@ -32,26 +32,24 @@ class CheckOutScrn extends StatelessWidget {
               ],
             ),
             SizedBox(height: kheight * 0.01),
-            placeOrderButton(context),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => const OrderPlaced()));
+              },
+              style: ButtonStyle(
+                  fixedSize: MaterialStatePropertyAll(Size(kwidth * 0.6, kheight * 0.01)),
+                  backgroundColor: const MaterialStatePropertyAll(Colors.black),
+                  foregroundColor: const MaterialStatePropertyAll(Colors.white),
+                  shape: const MaterialStatePropertyAll(ContinuousRectangleBorder())),
+              child: const Text(
+                'PLACE ORDER',
+              ),
+            ),
             SizedBox(height: kheight * 0.01),
           ],
         ),
       ),
     );
-  }
-
-  Widget placeOrderButton(BuildContext context) {
-    return ElevatedButton(
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const OrderPlaced()));
-        },
-        style: ButtonStyle(
-            fixedSize: MaterialStatePropertyAll(Size(kwidth * 0.6, kheight * 0.01)),
-            backgroundColor: const MaterialStatePropertyAll(Colors.black),
-            foregroundColor: const MaterialStatePropertyAll(Colors.white),
-            shape: const MaterialStatePropertyAll(ContinuousRectangleBorder())),
-        child: const Text(
-          'PLACE ORDER',
-        ));
   }
 }

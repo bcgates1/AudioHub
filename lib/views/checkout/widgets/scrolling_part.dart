@@ -1,14 +1,18 @@
+import 'package:audiohub/controllers/cart/cart.dart';
 import 'package:audiohub/views/checkout/widgets/address_adding.dart';
 import 'package:audiohub/views/checkout/widgets/checkout_item_tile.dart';
 import 'package:audiohub/views/core/style.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ScrollingPart extends StatelessWidget {
   const ScrollingPart({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final value = Provider.of<CartController>(context, listen: false);
+
     return Expanded(
       child: SingleChildScrollView(
         child: Padding(
@@ -27,10 +31,11 @@ class ScrollingPart extends StatelessWidget {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(kheight * 0.01),
-                      border: Border.all(
-                        color: Colors.grey,
-                      )),
+                    borderRadius: BorderRadius.circular(kheight * 0.01),
+                    border: Border.all(
+                      color: Colors.grey,
+                    ),
+                  ),
                   height: kheight * 0.15,
                   child: Center(
                     child: Row(
@@ -60,9 +65,17 @@ class ScrollingPart extends StatelessWidget {
               ListView.separated(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) => const CheckoutItemTile(),
+                itemCount: value.cartQuantity.length,
+                itemBuilder: (context, index) {
+                  return CheckoutItemTile(
+                    imgpath: value.allProduct[index]['image'][0],
+                    name: value.allProduct[index]['name'],
+                    price: value.allProduct[index]['price'],
+                    quantity: value.cartQuantity[index]['quantity'],
+                    productId: value.cartQuantity[index]['productId'],
+                  );
+                },
                 separatorBuilder: (context, index) => const Divider(),
-                itemCount: 2,
               )
             ],
           ),

@@ -13,19 +13,24 @@ class CartCheckOut extends StatelessWidget {
       width: double.infinity,
       height: kheight * 0.08,
       child: Center(
-          child: ElevatedButton(
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CheckOutScrn()));
-        },
-        style: const ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(Colors.white),
-            shape: MaterialStatePropertyAll(ContinuousRectangleBorder())),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 50),
-          child: Text('CHECKOUT',
-              style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: Colors.black)),
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => const CheckOutScrn()));
+          },
+          style: ButtonStyle(
+            backgroundColor: const MaterialStatePropertyAll(Colors.white),
+            shape: MaterialStatePropertyAll(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 50),
+            child: Text('CHECKOUT',
+                style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: Colors.black)),
+          ),
         ),
-      )),
+      ),
     );
   }
 }

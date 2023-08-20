@@ -31,10 +31,10 @@ class SplashScreen extends StatelessWidget {
       const Duration(seconds: 2),
       () async {
         if (user != null) {
+          await Provider.of<WishListController>(context, listen: false).getWishList();
           if (context.mounted) {
             Navigator.of(context)
                 .pushReplacement(MaterialPageRoute(builder: (context) => const Home()));
-            await Provider.of<WishListController>(context, listen: false).getWishList();
           }
         } else {
           Navigator.of(context)

@@ -2,6 +2,8 @@ import 'package:audiohub/service/firebase/wishlist.dart';
 import 'package:audiohub/views/common_widgets/alert_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+//alternate wishlist model not using currently
+
 class WishListCheckFirebase {
   static Future<bool> isProductInWishlist({required String productId, required context}) async {
     try {

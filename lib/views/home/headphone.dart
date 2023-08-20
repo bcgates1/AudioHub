@@ -1,6 +1,7 @@
 import 'package:audiohub/service/firebase/fetchdata.dart';
 import 'package:audiohub/views/common_widgets/item_card.dart';
 import 'package:audiohub/views/core/style.dart';
+import 'package:audiohub/views/product/product_details.dart';
 import 'package:flutter/material.dart';
 
 class HeadphoneScreen extends StatelessWidget {
@@ -23,17 +24,23 @@ class HeadphoneScreen extends StatelessWidget {
         return GridView.builder(
           itemCount: snapshot.data!.docs.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisExtent: kheight * 0.32,
-              crossAxisSpacing: 5,
-              mainAxisSpacing: 5),
+            crossAxisCount: 2,
+            mainAxisExtent: kheight * 0.32,
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 5,
+          ),
           padding: const EdgeInsets.all(5),
           itemBuilder: (context, index) {
             Map data = snapshot.data!.docs[index].data();
             return InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ProductDetails(
+                          productId: snapshot.data!.docs[index].id,
+                        )));
+              },
               child: ItemCard(
-                imagepath: data['image'],
+                imagepath: data['image'][0],
                 discount: data['discount'],
                 price: data['price'],
                 category: data['category'],

@@ -53,7 +53,7 @@ class AllScreens extends StatelessWidget {
                     );
                   },
                   child: ItemCard(
-                    imagepath: snapshot.data!.docs[index]['image'],
+                    imagepath: snapshot.data!.docs[index]['image'][0],
                     discount: snapshot.data!.docs[index]['discount'],
                     price: snapshot.data!.docs[index]['price'],
                     name: snapshot.data!.docs[index]['name'],

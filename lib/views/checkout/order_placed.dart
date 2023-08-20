@@ -24,7 +24,7 @@ class OrderPlaced extends StatelessWidget {
                       style: TextStyle(fontSize: 30),
                     ),
                     Text(
-                      'Something Error',
+                      'Error',
                       style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: Colors.black),
                     )
                   ],

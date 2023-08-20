@@ -9,15 +9,16 @@ class Cart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SafeArea(
-        child: Scaffold(
-      appBar: AppbarCom(title: 'Cart'),
-      body: Column(
-        children: [
-          CartAddmore(),
-          Flexible(child: CartItems()),
-          CartCheckOut(),
-        ],
+      child: Scaffold(
+        appBar: AppbarCom(title: 'Cart'),
+        body: Column(
+          children: [
+            CartAddmore(),
+            Flexible(child: CartItems()),
+            CartCheckOut(),
+          ],
+        ),
       ),
-    ));
+    );
   }
 }

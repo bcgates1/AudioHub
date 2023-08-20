@@ -3,7 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CheckoutItemTile extends StatelessWidget {
-  const CheckoutItemTile({super.key});
+  const CheckoutItemTile({
+    super.key,
+    required this.name,
+    required this.imgpath,
+    required this.price,
+    required this.quantity,
+    required this.productId,
+  });
+  final String name;
+  final String imgpath;
+  final int price;
+  final int quantity;
+  final String productId;
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +43,9 @@ class CheckoutItemTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Sony WH-1000XM5', style: GoogleFonts.inter(color: Colors.black)),
+                Text(name, style: GoogleFonts.inter(color: Colors.black)),
                 Text(
-                  '₹28990',
+                  price.toString(),
                   style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: Colors.black),
                 ),
                 Container(
@@ -43,7 +55,7 @@ class CheckoutItemTile extends StatelessWidget {
                       borderRadius: BorderRadius.circular(kwidth * 0.05), border: Border.all()),
                   child: Center(
                     child: Text(
-                      '1',
+                      quantity.toString(),
                       style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                   ),

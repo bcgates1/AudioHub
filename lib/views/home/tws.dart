@@ -36,7 +36,7 @@ class TWSScreen extends StatelessWidget {
                     // Navigator.of(context).pushNamed(ProductDetails.routename);
                   },
                   child: ItemCard(
-                    imagepath: data['image'],
+                    imagepath: data['image'][0],
                     discount: data['discount'],
                     price: data['price'],
                     category: data['category'],

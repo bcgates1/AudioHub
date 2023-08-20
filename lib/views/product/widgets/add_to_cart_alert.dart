@@ -1,9 +1,14 @@
+import 'package:audiohub/controllers/add_to_cart/qty_controller.dart';
+import 'package:audiohub/service/firebase/add_to_cart.dart';
 import 'package:audiohub/views/core/style.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class AddToCartAlert extends StatelessWidget {
-  const AddToCartAlert({super.key});
+  const AddToCartAlert({super.key, required this.snapshot, required this.productId});
+  final AsyncSnapshot<Map<String, dynamic>?> snapshot;
+  final String productId;
 
   @override
   Widget build(BuildContext context) {
@@ -12,56 +17,70 @@ class AddToCartAlert extends StatelessWidget {
         'ADD TO CART',
         style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold),
       ),
-      contentPadding: EdgeInsets.symmetric(horizontal: kwidth * 0.1, vertical: kheight * 0.01),
-      content: SizedBox(
-        height: kheight * 0.2,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Text(
-              'Sony WH-1000XM5',
-              style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: Colors.black),
-            ),
-            Row(
+      contentPadding: EdgeInsets.symmetric(horizontal: kwidth * 0.14, vertical: kheight * 0.01),
+      content: ChangeNotifierProvider(
+        create: (BuildContext context) => CartQuatity(),
+        child: Consumer<CartQuatity>(
+          builder: (context, value, child) => SizedBox(
+            height: kheight * 0.2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  'QTY  :',
-                  style: GoogleFonts.inter(color: Colors.black),
+                  snapshot.data!['name'],
+                  style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: Colors.black),
                 ),
-                SizedBox(
-                  width: kwidth * 0.05,
-                ),
-                SizedBox(
-                  width: kwidth * 0.2,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      incAndDecButton(icon: Icons.add),
-                      Text(
-                        '1',
-                        style: GoogleFonts.inter(fontSize: 20),
+                Row(
+                  children: [
+                    Text(
+                      'QTY  :',
+                      style: GoogleFonts.inter(color: Colors.black),
+                    ),
+                    SizedBox(
+                      width: kwidth * 0.05,
+                    ),
+                    SizedBox(
+                      width: kwidth * 0.2,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () => value.increment(snapshot.data!['price']),
+                            child: incAndDecButton(icon: Icons.add),
+                          ),
+                          Text(
+                            value.quantity.toString(),
+                            style: GoogleFonts.inter(fontSize: 20),
+                          ),
+                          InkWell(
+                            onTap: () => value.decrement(snapshot.data!['price']),
+                            child: incAndDecButton(icon: Icons.remove),
+                          )
+                        ],
                       ),
-                      incAndDecButton(icon: Icons.remove)
-                    ],
-                  ),
-                )
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  'Cost :',
-                  style: GoogleFonts.inter(color: Colors.black),
+                    )
+                  ],
                 ),
-                Text(
-                  ' ₹28990',
-                  style: GoogleFonts.inter(color: Colors.black),
-                )
+                Row(
+                  children: [
+                    Text(
+                      'Cost :',
+                      style: GoogleFonts.inter(color: Colors.black),
+                    ),
+                    SizedBox(
+                      width: kwidth * 0.05,
+                    ),
+                    Text(
+                      value.cost == 0 ? snapshot.data!['price'].toString() : value.cost.toString(),
+                      style: GoogleFonts.inter(color: Colors.black),
+                    )
+                  ],
+                ),
+                addtocartbutton(context),
               ],
             ),
-            addtocartbutton(context),
-          ],
+          ),
         ),
       ),
     );
@@ -71,22 +90,28 @@ class AddToCartAlert extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(kheight * 0.0125),
       child: ColoredBox(
-          color: Colors.black,
-          child: SizedBox(
-            width: kheight * 0.025,
-            height: kheight * 0.025,
-            child: Icon(
-              icon,
-              color: Colors.white,
-              size: kheight * 0.02,
-            ),
-          )),
+        color: Colors.black,
+        child: SizedBox(
+          width: kheight * 0.025,
+          height: kheight * 0.025,
+          child: Icon(
+            icon,
+            color: Colors.white,
+            size: kheight * 0.02,
+          ),
+        ),
+      ),
     );
   }
 
   Widget addtocartbutton(BuildContext context) {
     return ElevatedButton(
         onPressed: () {
+          CartServices().addToCart(
+            productId: productId,
+            quantity: Provider.of<CartQuatity>(context, listen: false).quantity,
+            context: context,
+          );
           Navigator.of(context).pop();
         },
         style: ButtonStyle(

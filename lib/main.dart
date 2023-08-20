@@ -1,3 +1,4 @@
+import 'package:audiohub/controllers/cart/cart.dart';
 import 'package:audiohub/controllers/payment_selector/payment_selector.dart';
 import 'package:audiohub/controllers/wishlist/wishlist_controller.dart';
 import 'package:audiohub/views/core/style.dart';
@@ -27,6 +28,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => WishListController(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => CartController(),
+        )
       ],
       child: MaterialApp(
         theme: ThemeData(

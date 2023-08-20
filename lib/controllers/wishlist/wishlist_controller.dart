@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:audiohub/service/firebase/wishlist.dart';
 import 'package:audiohub/views/common_widgets/alert_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,11 +14,10 @@ class WishListController extends ChangeNotifier {
           await FirebaseFirestore.instance.collection('wishlists').doc(WishListFirebase.uid).get();
 
       if (wishlistSnapshot.exists) {
-        Object a = Object();
-        
         Map<String, dynamic>? wishlistData = wishlistSnapshot.data() as Map<String, dynamic>?;
         if (wishlistData != null) {
           wishList = wishlistData['products'];
+          log(wishList.toString());
         }
       }
     } on FirebaseException catch (e) {

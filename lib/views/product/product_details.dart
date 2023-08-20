@@ -22,7 +22,9 @@ class ProductDetails extends StatelessWidget {
             builder: (context, snapshot) => snapshot.hasData
                 ? Column(
                     children: [
-                       ProductScrollingPart(snapshot: snapshot,),
+                      ProductScrollingPart(
+                        snapshot: snapshot,
+                      ),
                       SizedBox(
                         height: kheight * 0.08,
                         child: Row(
@@ -40,7 +42,10 @@ class ProductDetails extends StatelessWidget {
                               onPressed: () {
                                 showDialog(
                                   context: context,
-                                  builder: (context) => const AddToCartAlert(),
+                                  builder: (context) => AddToCartAlert(
+                                    snapshot: snapshot,
+                                    productId: productId,
+                                  ),
                                 );
                               },
                               style: _buttonstyle(),

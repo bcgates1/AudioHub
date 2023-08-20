@@ -1,7 +1,5 @@
-import 'dart:developer';
 
 import 'package:audiohub/service/firebase/authentication.dart';
-import 'package:audiohub/views/common_widgets/toast.dart';
 import 'package:audiohub/views/core/style.dart';
 import 'package:audiohub/views/signup/signup.dart';
 import 'package:audiohub/views/signup/signup_widgets.dart';
