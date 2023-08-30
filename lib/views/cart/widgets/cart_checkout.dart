@@ -1,7 +1,10 @@
+import 'package:audiohub/controllers/cart/cart.dart';
 import 'package:audiohub/views/checkout/checkout.dart';
+import 'package:audiohub/views/common_widgets/alert_widgets.dart';
 import 'package:audiohub/views/core/style.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class CartCheckOut extends StatelessWidget {
   const CartCheckOut({super.key});
@@ -15,8 +18,12 @@ class CartCheckOut extends StatelessWidget {
       child: Center(
         child: ElevatedButton(
           onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => const CheckOutScrn()));
+            final value = Provider.of<CartController>(context, listen: false);
+            if (value.cartQuantity.isNotEmpty) {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => CheckOutScrn()));
+            } else {
+              snackbarMessage(message: 'Add products to cart', context: context);
+            }
           },
           style: ButtonStyle(
             backgroundColor: const MaterialStatePropertyAll(Colors.white),

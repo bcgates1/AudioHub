@@ -1,29 +1,44 @@
-import 'package:audiohub/service/firebase/wishlist.dart';
+import 'package:audiohub/service/firebase/wishlist_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FetchDataFirebase {
-  static FirebaseFirestore firestore = FirebaseFirestore.instance;
+  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  static String collecionName = 'products';
+  static const String _collecionName = 'products';
 
-  static CollectionReference allProducts = firestore.collection(collecionName);
+  static CollectionReference allProducts = _firestore.collection(_collecionName);
 
   static Query<Map<String, dynamic>> neckband =
-      firestore.collection(collecionName).where('category', isEqualTo: 'Neckband');
+      _firestore.collection(_collecionName).where('category', isEqualTo: 'Neckband');
 
   static Query<Map<String, dynamic>> headphone =
-      firestore.collection(collecionName).where('category', isEqualTo: 'Headphone');
+      _firestore.collection(_collecionName).where('category', isEqualTo: 'Headphone');
 
   static Query<Map<String, dynamic>> tws =
-      firestore.collection(collecionName).where('category', isEqualTo: 'TWS');
+      _firestore.collection(_collecionName).where('category', isEqualTo: 'TWS');
 
   static CollectionReference<Map<String, dynamic>> cart =
-      firestore.collection('cart').doc(WishListFirebase.uid).collection('cartItems');
+      _firestore.collection('cart').doc(WishListFirebase.uid).collection('cartItems');
+
+  static CollectionReference<Map<String, dynamic>> bannerImages = _firestore.collection('banners');
 
   static Future<Map<String, dynamic>?> fetchProductWithId({required String productId}) async {
     DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await firestore.collection(collecionName).doc(productId).get();
+        await _firestore.collection(_collecionName).doc(productId).get();
 
     return snapshot.data();
+  }
+
+  static CollectionReference<Map<String, dynamic>> allAddress =
+      _firestore.collection('addresses').doc(WishListFirebase.uid).collection('addressList');
+
+  static Future<List> fetchAllOrders() async {
+    DocumentReference userOrderDocRef = _firestore.collection('orders').doc(WishListFirebase.uid);
+
+    final allOrder = await userOrderDocRef.get();
+    if (allOrder.exists) {
+      return allOrder['orderLists'];
+    }
+    return [];
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:audiohub/service/firebase/add_to_cart.dart';
 import 'package:audiohub/service/firebase/fetchdata.dart';
 import 'package:flutter/material.dart';
@@ -11,18 +9,17 @@ class CartController extends ChangeNotifier {
   Map cartQuantity = {};
   Map allProduct = {};
 
-  increment({required int index}) async {
+  Future increment({required int index}) async {
     cartQuantity[index]['quantity']++;
     await findtotal();
 
     notifyListeners();
   }
 
-  decrement({required int index}) async {
-    if (quantity > 1) {
+  Future decrement({required int index}) async {
+    if (cartQuantity[index]['quantity'] > 1) {
       cartQuantity[index]['quantity']--;
       await findtotal();
-
       notifyListeners();
     }
   }
@@ -34,7 +31,6 @@ class CartController extends ChangeNotifier {
       for (int i = 0; i < snapshot.docs.length; i++) {
         cartQuantity[i] = snapshot.docs[i].data();
       }
-      // log(cartQuantity.toString());
       await findtotal();
       return false;
     }
@@ -43,7 +39,7 @@ class CartController extends ChangeNotifier {
 
   deleteitem({required int index}) async {
     cartQuantity.remove(index);
-    initializeAll();
+    await initializeAll();
     notifyListeners();
   }
 
@@ -56,9 +52,8 @@ class CartController extends ChangeNotifier {
       price = data!['price'];
       quantity = cartQuantity.values.toList()[i]['quantity'];
       totalPrice += price * quantity;
-      allProduct[i] = data;
+      allProduct['$i'] = data;
     }
-    log(allProduct.toString());
   }
 
   addtocart({required BuildContext context}) async {

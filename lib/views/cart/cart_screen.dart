@@ -13,8 +13,9 @@ class Cart extends StatelessWidget {
         appBar: AppbarCom(title: 'Cart'),
         body: Column(
           children: [
-            CartAddmore(),
-            Flexible(child: CartItems()),
+            Flexible(
+              child: CartItems(),
+            ),
             CartCheckOut(),
           ],
         ),

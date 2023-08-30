@@ -59,7 +59,7 @@ class ItemCard extends StatelessWidget {
                         ? const Icon(
                             Icons.favorite,
                             size: 28,
-                            color: Colors.black,
+                            color: Color.fromARGB(255, 216, 76, 66),
                           )
                         : const Icon(
                             Icons.favorite_border,

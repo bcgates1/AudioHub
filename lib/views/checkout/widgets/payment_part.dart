@@ -1,4 +1,4 @@
-import 'package:audiohub/controllers/payment_selector/payment_selector.dart';
+import 'package:audiohub/controllers/checkout/payment_selector/payment_selector.dart';
 import 'package:audiohub/views/checkout/widgets/payment_tiles.dart';
 import 'package:audiohub/views/core/style.dart';
 import 'package:flutter/material.dart';

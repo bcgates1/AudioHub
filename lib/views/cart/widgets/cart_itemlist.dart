@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:audiohub/controllers/cart/cart.dart';
+import 'package:audiohub/utils/constants/app_constants.dart';
 import 'package:audiohub/views/cart/widgets/cart_tile.dart';
 import 'package:audiohub/views/core/style.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,7 @@ class CartItems extends StatelessWidget {
 
     return WillPopScope(
       onWillPop: () async {
-       await value.addtocart(context: context);
+        await value.addtocart(context: context);
         return true;
       },
       child: FutureBuilder(
@@ -34,26 +33,29 @@ class CartItems extends StatelessWidget {
                   ? Column(
                       children: [
                         SizedBox(
-                          height: kheight * 0.52,
+                          height: kheight * 0.63,
                           child: SingleChildScrollView(
                             child: ListView.separated(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: kwidth * 0.03, vertical: kheight * 0.01),
-                              itemCount: value.cartQuantity.length,
-                              shrinkWrap: true,
-                              separatorBuilder: (context, index) => const Divider(),
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) => CartTile(
-                                imgpath: value.allProduct[index]['image'][0],
-                                name: value.allProduct[index]['name'],
-                                price: value.allProduct[index]['price'] *
-                                    value.cartQuantity[index]['quantity'],
-                                quantity: value.cartQuantity[index]['quantity'],
-                                productId: value.cartQuantity[index]['productId'],
-                                index: index,
-                                value: value,
-                              ),
-                            ),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: kwidth * 0.03,
+                                  vertical: kheight * 0.01,
+                                ),
+                                itemCount: value.cartQuantity.length,
+                                shrinkWrap: true,
+                                separatorBuilder: (context, index) => const Divider(),
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return CartTile(
+                                    imgpath: value.allProduct['$index']['image'][0],
+                                    name: value.allProduct['$index']['name'],
+                                    price: value.allProduct['$index']['price'] *
+                                        value.cartQuantity[index]['quantity'],
+                                    quantity: value.cartQuantity[index]['quantity'],
+                                    productId: value.cartQuantity[index]['productId'],
+                                    index: index,
+                                    value: value,
+                                  );
+                                }),
                           ),
                         ),
                         Padding(
@@ -76,15 +78,17 @@ class CartItems extends StatelessWidget {
                                         'SUBTOTAL',
                                         style: GoogleFonts.inter(color: Colors.black),
                                       ),
-                                      Text('DELIVERY FEE',
-                                          style: GoogleFonts.inter(color: Colors.black))
+                                      Text(
+                                        'DELIVERY FEE',
+                                        style: GoogleFonts.inter(color: Colors.black),
+                                      )
                                     ],
                                   ),
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Text(
-                                        value.totalPrice.toString(),
+                                        numberformat.format(value.totalPrice),
                                         style: GoogleFonts.inter(color: Colors.black),
                                       ),
                                       Text('₹0.00', style: GoogleFonts.inter(color: Colors.black))
@@ -92,7 +96,7 @@ class CartItems extends StatelessWidget {
                                   )
                                 ],
                               ),
-                              const SizedBox(height: 20),
+                              const SizedBox(height: 10),
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: kwidth * 0.05),
                                 child: Container(
@@ -106,17 +110,23 @@ class CartItems extends StatelessWidget {
                                         Text(
                                           'Total',
                                           style: GoogleFonts.inter(
-                                              color: Colors.white, fontWeight: FontWeight.bold),
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                        Text(value.totalPrice.toString(),
-                                            style: GoogleFonts.inter(
-                                                color: Colors.white, fontWeight: FontWeight.bold))
+                                        Text(
+                                          numberformat.format(value.totalPrice),
+                                          style: GoogleFonts.inter(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
                                       ],
                                     ),
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 30)
+                              // const SizedBox(height: 30)
                             ],
                           ),
                         ),

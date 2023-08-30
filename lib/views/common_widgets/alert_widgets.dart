@@ -1,6 +1,6 @@
-import 'package:audiohub/views/core/style.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 alertshower({required String message, required BuildContext context}) {
   showDialog(
@@ -31,21 +31,26 @@ toastMessage({required String message}) {
 
 snackbarMessage({required String message, required BuildContext context}) {
   ScaffoldMessenger.of(context).removeCurrentSnackBar();
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    content: Text(message),
-  ));
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(message),
+    ),
+  );
 }
 
 loading(BuildContext context) {
   return showDialog(
     context: context,
-    barrierDismissible: false,
-    builder: (context) => Center(
-      child: SizedBox(
-        height: kheight * 0.18,
-        width: kwidth * 0.4,
-        child: const CircularProgressIndicator(),
-      ),
-    ),
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return Center(
+        child: LoadingAnimationWidget.discreteCircle(
+          color: Colors.white,
+          secondRingColor: const Color.fromARGB(255, 2, 2, 2),
+          thirdRingColor: const Color.fromARGB(255, 0, 0, 0),
+          size: 80,
+        ),
+      );
+    },
   );
 }

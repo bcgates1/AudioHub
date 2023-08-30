@@ -76,16 +76,6 @@ class ProductVarientsToLast extends StatelessWidget {
     );
   }
 
-  Widget _titletext(String text) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      SizedBox(height: kheight * 0.01),
-      Text(
-        text,
-        style: GoogleFonts.inter(color: Colors.black),
-      )
-    ]);
-  }
-
   Widget _detailtext(String text, bool isblack) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       SizedBox(height: kheight * 0.01),

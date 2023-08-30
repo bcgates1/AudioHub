@@ -1,5 +1,6 @@
 import 'package:audiohub/controllers/cart/cart.dart';
 import 'package:audiohub/service/firebase/add_to_cart.dart';
+import 'package:audiohub/utils/constants/app_constants.dart';
 import 'package:audiohub/views/core/style.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -32,7 +33,7 @@ class CartTile extends StatelessWidget {
           width: kwidth * 0.2,
           child: Image.network(
             imgpath,
-            fit: BoxFit.fitHeight,
+            fit: BoxFit.contain,
           ),
         ),
         SizedBox(
@@ -47,7 +48,7 @@ class CartTile extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              price.toString(),
+              numberformat.format(price),
               style: GoogleFonts.inter(color: Colors.black),
             )
           ],
@@ -85,8 +86,8 @@ class CartTile extends StatelessWidget {
           width: kwidth * 0.05,
         ),
         InkWell(
-          onTap: () {
-            CartServices().removeFromCart(productId: productId, context: context);
+          onTap: () async {
+            await CartServices().removeFromCart(productId: productId, context: context);
             value.deleteitem(index: index);
           },
           child: const Icon(Icons.delete),

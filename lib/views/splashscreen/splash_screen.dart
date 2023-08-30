@@ -25,7 +25,7 @@ class SplashScreen extends StatelessWidget {
   }
 
   wait(BuildContext context) {
-    User? user = FirebaseAuth.instance.currentUser;
+    final User? user = FirebaseAuth.instance.currentUser;
 
     Timer(
       const Duration(seconds: 2),

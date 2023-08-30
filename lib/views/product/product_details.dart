@@ -1,5 +1,4 @@
 import 'package:audiohub/service/firebase/fetchdata.dart';
-import 'package:audiohub/views/checkout/checkout.dart';
 import 'package:audiohub/views/common_widgets/appbar.dart';
 import 'package:audiohub/views/core/style.dart';
 import 'package:audiohub/views/product/widgets/add_to_cart_alert.dart';
@@ -32,8 +31,14 @@ class ProductDetails extends StatelessWidget {
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                Navigator.of(context).push(
-                                    MaterialPageRoute(builder: (context) => const CheckOutScrn()));
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AddToCartAlert(
+                                    snapshot: snapshot,
+                                    productId: productId,
+                                    buynow: true,
+                                  ),
+                                );
                               },
                               style: _buttonstyle(),
                               child: _buttonchild('BUY NOW'),

@@ -1,14 +1,22 @@
 import 'package:audiohub/controllers/add_to_cart/qty_controller.dart';
+import 'package:audiohub/models/buy_now.dart';
 import 'package:audiohub/service/firebase/add_to_cart.dart';
+import 'package:audiohub/views/checkout/checkout.dart';
 import 'package:audiohub/views/core/style.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class AddToCartAlert extends StatelessWidget {
-  const AddToCartAlert({super.key, required this.snapshot, required this.productId});
+  const AddToCartAlert({
+    super.key,
+    required this.snapshot,
+    required this.productId,
+    this.buynow = false,
+  });
   final AsyncSnapshot<Map<String, dynamic>?> snapshot;
   final String productId;
+  final bool buynow;
 
   @override
   Widget build(BuildContext context) {
@@ -107,12 +115,28 @@ class AddToCartAlert extends StatelessWidget {
   Widget addtocartbutton(BuildContext context) {
     return ElevatedButton(
         onPressed: () {
-          CartServices().addToCart(
-            productId: productId,
-            quantity: Provider.of<CartQuatity>(context, listen: false).quantity,
-            context: context,
-          );
-          Navigator.of(context).pop();
+          final qty = Provider.of<CartQuatity>(context, listen: false).quantity;
+          if (buynow) {
+            BuyNow.name = snapshot.data!['name'];
+            BuyNow.price = snapshot.data!['price'];
+            BuyNow.quantity = qty;
+            BuyNow.image = snapshot.data!['image'][0];
+            BuyNow.productId = productId;
+            Navigator.of(context).pop();
+
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => CheckOutScrn(
+                buyNow: true,
+              ),
+            ));
+          } else {
+            CartServices().addToCart(
+              productId: productId,
+              quantity: qty,
+              context: context,
+            );
+            Navigator.of(context).pop();
+          }
         },
         style: ButtonStyle(
             fixedSize: MaterialStatePropertyAll(Size(kwidth * 0.5, kheight * 0.02)),

@@ -1,21 +1,36 @@
-import 'package:audiohub/views/checkout/order_placed.dart';
+import 'package:audiohub/controllers/cart/cart.dart';
+import 'package:audiohub/controllers/checkout/payment_selector/payment_selector.dart';
+import 'package:audiohub/models/buy_now.dart';
+import 'package:audiohub/service/razorpay_services/razorpay.dart';
+import 'package:audiohub/utils/constants/app_constants.dart';
 import 'package:audiohub/views/checkout/widgets/payment_part.dart';
 import 'package:audiohub/views/checkout/widgets/scrolling_part.dart';
 import 'package:audiohub/views/common_widgets/appbar.dart';
 import 'package:audiohub/views/core/style.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class CheckOutScrn extends StatelessWidget {
-  const CheckOutScrn({super.key});
+  CheckOutScrn({super.key, this.buyNow = false});
+  final RazorPayService razorPayService = RazorPayService();
+  final bool buyNow;
+
   @override
   Widget build(BuildContext context) {
+    final cartController;
+
+    cartController = Provider.of<CartController>(context, listen: false);
+
+    final paymentSelector = Provider.of<PaymentSelector>(context, listen: false);
+    razorPayService.razorpayInitialize(context);
+
     return SafeArea(
       child: Scaffold(
         appBar: const AppbarCom(title: 'Checkout'),
         body: Column(
           children: [
-            const ScrollingPart(),
+            ScrollingPart(buyNow: buyNow),
             const PaymentPart(),
             const Divider(),
             Row(
@@ -26,7 +41,9 @@ class CheckOutScrn extends StatelessWidget {
                   style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: Colors.black),
                 ),
                 Text(
-                  '₹57980',
+                  numberformat.format(
+                    buyNow ? (BuyNow.price! * BuyNow.quantity!) : cartController.totalPrice,
+                  ),
                   style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: Colors.black),
                 )
               ],
@@ -34,14 +51,19 @@ class CheckOutScrn extends StatelessWidget {
             SizedBox(height: kheight * 0.01),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => const OrderPlaced()));
+                if (paymentSelector.israzorpay) {
+                  razorPayService.razorpayCheckout(
+                    amount: buyNow ? (BuyNow.price! * BuyNow.quantity!) : cartController.totalPrice,
+                    isBuyNow: buyNow,
+                  );
+                }
               },
               style: ButtonStyle(
-                  fixedSize: MaterialStatePropertyAll(Size(kwidth * 0.6, kheight * 0.01)),
+                  fixedSize: MaterialStatePropertyAll(Size(kwidth * 0.7, kheight * 0.02)),
                   backgroundColor: const MaterialStatePropertyAll(Colors.black),
                   foregroundColor: const MaterialStatePropertyAll(Colors.white),
-                  shape: const MaterialStatePropertyAll(ContinuousRectangleBorder())),
+                  shape: const MaterialStatePropertyAll(
+                      RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))))),
               child: const Text(
                 'PLACE ORDER',
               ),

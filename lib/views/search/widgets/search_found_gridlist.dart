@@ -9,10 +9,11 @@ class SearchFoundGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisExtent: kheight * 0.32,
-          crossAxisSpacing: 5,
-          mainAxisSpacing: 5),
+        crossAxisCount: 2,
+        mainAxisExtent: kheight * 0.32,
+        crossAxisSpacing: 5,
+        mainAxisSpacing: 5,
+      ),
       padding: const EdgeInsets.all(5),
       itemBuilder: (context, index) => ItemCard(
         imagepath: imgpath,

@@ -13,7 +13,7 @@ class Auth {
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  signupwithemailid(
+  Future signupwithemailid(
       {required String email, required String password, required String username}) async {
     try {
       await _auth.createUserWithEmailAndPassword(email: email, password: password).then((value) {
@@ -29,7 +29,7 @@ class Auth {
     }
   }
 
-  signinwithemail({required String email, required String password}) async {
+  Future signinwithemail({required String email, required String password}) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password).then((value) {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Home()));
@@ -45,10 +45,11 @@ class Auth {
     }
   }
 
-  signwithgoogle() async {
+  Future signwithgoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      GoogleSignInAuthentication googleSignInAuthentication = await googleUser!.authentication;
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleUser!.authentication;
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
@@ -67,7 +68,7 @@ class Auth {
     }
   }
 
-  firebasesignout() {
+  void firebasesignout() {
     try {
       _auth.signOut();
       toastMessage(message: 'Signed Out');

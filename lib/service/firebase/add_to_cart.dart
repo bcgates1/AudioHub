@@ -1,4 +1,4 @@
-import 'package:audiohub/service/firebase/wishlist.dart';
+import 'package:audiohub/service/firebase/wishlist_services.dart';
 import 'package:audiohub/views/common_widgets/alert_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +40,20 @@ class CartServices {
           .then((value) => toastMessage(message: 'Removed from cart'));
     } on FirebaseException catch (e) {
       alertshower(message: e.message!, context: context);
+    }
+  }
+
+  Future clearCart() async {
+    try {
+      // await firestore.collection('cart').doc(WishListFirebase.uid).delete();
+      await firestore
+          .collection('cart')
+          .doc(WishListFirebase.uid)
+          .collection('cartItems')
+          .get()
+          .then((snapshot) => snapshot.docs.forEach((doc) => doc.reference.delete()));
+    } on FirebaseException catch (e) {
+      toastMessage(message: e.message!);
     }
   }
 }

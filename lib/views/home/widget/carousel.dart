@@ -1,38 +1,59 @@
+import 'package:audiohub/service/firebase/fetchdata.dart';
 import 'package:audiohub/views/core/style.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-final List<String> imgList = [
-  'https://m.media-amazon.com/images/G/31/img22/WLA/Launches23/Mi/RedmiBuds4Active/Sale/D83995390_IN_WLA_Redmi_Buds4Active_Launch_978x900._SS900_QL85_.jpg',
-  'https://m.media-amazon.com/images/G/31/camera/audio/sony/Sony._SS900_QL85_.jpg',
-  'https://m.media-amazon.com/images/G/31/img22/WLA/Launches23/OnePlusNordBuds2/Sale/D75520316_IN_WLA_OnePlusNordBuds2_launch_978x900._SS900_QL85_.jpg',
-];
-
 class CarouselHome extends StatelessWidget {
-  CarouselHome({super.key});
+  const CarouselHome({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return CarouselSlider(
-      options: CarouselOptions(
-        enlargeCenterPage: true,
-        autoPlay: true,
-      ),
-      items: imageSliders,
-    );
-  }
-
-  final List<Widget> imageSliders = imgList
-      .map((item) => Container(
-            decoration: const BoxDecoration(
-                color: Colors.white, boxShadow: [BoxShadow(blurRadius: 5, color: Colors.black)]),
-            margin: const EdgeInsets.symmetric(vertical: 8),
-            child: Image.network(
-              item,
-              fit: BoxFit.cover,
-              width: kwidth,
-              height: kheight,
+    return StreamBuilder(
+        stream: FetchDataFirebase.bannerImages.snapshots(),
+        builder: (context, snapshot) {
+          return CarouselSlider(
+            options: CarouselOptions(
+              enlargeCenterPage: true,
+              autoPlay: true,
             ),
-          ))
-      .toList();
+            items: snapshot.connectionState == ConnectionState.waiting
+                ? [
+                    const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  ]
+                : snapshot.data!.docs
+                    .map((item) => Container(
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [BoxShadow(blurRadius: 5, color: Colors.black)],
+                          ),
+                          margin: EdgeInsets.symmetric(vertical: kwidth * 0.02),
+                          child: Image.network(
+                            item['image'],
+                            fit: BoxFit.fitWidth,
+                            width: kwidth,
+                            loadingBuilder: (BuildContext context, Widget child,
+                                ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) {
+                                // Image is fully loaded.
+                                return child;
+                              } else {
+                                // Show a loading indicator while the image is loading.
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes != null
+                                        ? loadingProgress.cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
+                                        : null,
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                        ))
+                    .toList(),
+          );
+        });
+  }
 }
