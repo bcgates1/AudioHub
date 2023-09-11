@@ -1,22 +1,22 @@
+import 'package:audiohub/utils/constants/app_constants.dart';
 import 'package:audiohub/views/core/style.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 
 class ProductNameAndDescription extends StatelessWidget {
-  ProductNameAndDescription(
-      {super.key,
-      required this.name,
-      required this.description,
-      required this.price,
-      required this.discount,
-      required this.category});
+  ProductNameAndDescription({
+    super.key,
+    required this.name,
+    required this.description,
+    required this.price,
+    required this.discount,
+    required this.category,
+  });
   final String name;
   final String description;
   final int price;
   final int discount;
   final String category;
-  final NumberFormat numberformat = NumberFormat.simpleCurrency(locale: 'en_IN', decimalDigits: 0);
 
   @override
   Widget build(BuildContext context) {

@@ -38,11 +38,19 @@ bool addressValidation({required AddressModel addressModel, required BuildContex
       alertshower(message: 'Pincode can only contain numbers', context: context);
       return false;
     }
+    if (addressModel.pincode!.length != 6) {
+      alertshower(message: 'Pincode must be 6 digits', context: context);
+      return false;
+    }
     alertshower(message: 'Pincode cannot be empty', context: context);
     return false;
   } else if (addressModel.mobile!.isEmpty) {
     if (RegExp(r'^[a-zA-Z]+$').hasMatch(addressModel.mobile!)) {
       alertshower(message: 'Mobile number can only contain numbers', context: context);
+      return false;
+    }
+    if (addressModel.mobile!.length != 10) {
+      alertshower(message: 'Mobile number must be 10 digits', context: context);
       return false;
     }
     alertshower(message: 'Mobile number cannot be empty', context: context);

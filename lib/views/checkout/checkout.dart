@@ -1,8 +1,12 @@
 import 'package:audiohub/controllers/cart/cart.dart';
+import 'package:audiohub/controllers/checkout/address_selector.dart';
 import 'package:audiohub/controllers/checkout/payment_selector/payment_selector.dart';
 import 'package:audiohub/models/buy_now.dart';
+import 'package:audiohub/service/firebase/add_to_cart.dart';
+import 'package:audiohub/service/firebase/create_order.dart';
 import 'package:audiohub/service/razorpay_services/razorpay.dart';
 import 'package:audiohub/utils/constants/app_constants.dart';
+import 'package:audiohub/views/checkout/order_placed.dart';
 import 'package:audiohub/views/checkout/widgets/payment_part.dart';
 import 'package:audiohub/views/checkout/widgets/scrolling_part.dart';
 import 'package:audiohub/views/common_widgets/appbar.dart';
@@ -18,10 +22,7 @@ class CheckOutScrn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cartController;
-
-    cartController = Provider.of<CartController>(context, listen: false);
-
+    final cartController = Provider.of<CartController>(context, listen: false);
     final paymentSelector = Provider.of<PaymentSelector>(context, listen: false);
     razorPayService.razorpayInitialize(context);
 
@@ -50,20 +51,37 @@ class CheckOutScrn extends StatelessWidget {
             ),
             SizedBox(height: kheight * 0.01),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (paymentSelector.israzorpay) {
                   razorPayService.razorpayCheckout(
                     amount: buyNow ? (BuyNow.price! * BuyNow.quantity!) : cartController.totalPrice,
                     isBuyNow: buyNow,
                   );
+                } else {
+                  final AddressSelector address =
+                      Provider.of<AddressSelector>(context, listen: false);
+
+                  if (buyNow) {
+                    await CreateOrder().createorderBuyNow(address: address, cod: true);
+                  } else {
+                    await CreateOrder()
+                        .createorder(cartItems: cartController, address: address, cod: true);
+                    await CartServices().clearCart();
+                  }
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => const OrderPlaced()));
                 }
               },
               style: ButtonStyle(
-                  fixedSize: MaterialStatePropertyAll(Size(kwidth * 0.7, kheight * 0.02)),
-                  backgroundColor: const MaterialStatePropertyAll(Colors.black),
-                  foregroundColor: const MaterialStatePropertyAll(Colors.white),
-                  shape: const MaterialStatePropertyAll(
-                      RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))))),
+                fixedSize: MaterialStatePropertyAll(Size(kwidth * 0.7, kheight * 0.02)),
+                backgroundColor: const MaterialStatePropertyAll(Colors.black),
+                foregroundColor: const MaterialStatePropertyAll(Colors.white),
+                shape: MaterialStatePropertyAll(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
               child: const Text(
                 'PLACE ORDER',
               ),

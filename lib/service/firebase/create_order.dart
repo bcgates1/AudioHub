@@ -16,13 +16,16 @@ class CreateOrder {
   String generateOrderID() {
     const Uuid uuid = Uuid();
     String orderID = uuid.v1();
-
     orderID = orderID.split('-').join();
 
     return orderID;
   }
 
-  createorder({required CartController cartItems, required AddressSelector address}) async {
+  createorder({
+    required CartController cartItems,
+    required AddressSelector address,
+    bool cod = false,
+  }) async {
     Map orderItems = {};
 
     for (int i = 0; i < cartItems.cartQuantity.length; i++) {
@@ -35,7 +38,7 @@ class CreateOrder {
       orderStatus: 'Order Placed',
       orderDateTime: DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now()).toString(),
       orderAmount: cartItems.totalPrice.toString(),
-      paymentMethod: 'Razorpay',
+      paymentMethod: cod ? 'COD' : 'Razorpay',
       orderItems: orderItems,
       orderAddress: address.addressList[address.selectedIndex],
       mobile: address.addressList[address.selectedIndex]['mobile'],
@@ -52,7 +55,7 @@ class CreateOrder {
           'orderLists': FieldValue.arrayUnion([orderModel.tomap(orderModel: orderModel)])
         });
       } else {
-        // If the document doesn't exist, create it with the initial array
+        // If the document doesn't exist
         await userOrderDocRef.set({
           'orderLists': [orderModel.tomap(orderModel: orderModel)]
         });
@@ -72,7 +75,10 @@ class CreateOrder {
     return cartModel.toMap(cartModel: cartModel);
   }
 
-  createorderBuyNow({required AddressSelector address}) async {
+  createorderBuyNow({
+    required AddressSelector address,
+    bool cod = false,
+  }) async {
     Map orderItems = {};
 
     orderItems['0'] = BuyNow.toMap();
@@ -82,7 +88,7 @@ class CreateOrder {
       orderStatus: 'Order Placed',
       orderDateTime: DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now()).toString(),
       orderAmount: (BuyNow.price! * BuyNow.quantity!).toString(),
-      paymentMethod: 'Razorpay',
+      paymentMethod: cod ? 'COD' : 'Razorpay',
       orderItems: orderItems,
       orderAddress: address.addressList[address.selectedIndex],
       mobile: address.addressList[address.selectedIndex]['mobile'],
@@ -99,7 +105,7 @@ class CreateOrder {
           'orderLists': FieldValue.arrayUnion([orderModel.tomap(orderModel: orderModel)])
         });
       } else {
-        // If the document doesn't exist, create it with the initial array
+        // If the document doesn't exist
         await userOrderDocRef.set({
           'orderLists': [orderModel.tomap(orderModel: orderModel)]
         });

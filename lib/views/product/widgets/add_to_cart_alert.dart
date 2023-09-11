@@ -1,6 +1,7 @@
 import 'package:audiohub/controllers/add_to_cart/qty_controller.dart';
 import 'package:audiohub/models/buy_now.dart';
 import 'package:audiohub/service/firebase/add_to_cart.dart';
+import 'package:audiohub/utils/constants/app_constants.dart';
 import 'package:audiohub/views/checkout/checkout.dart';
 import 'package:audiohub/views/core/style.dart';
 import 'package:flutter/material.dart';
@@ -80,7 +81,9 @@ class AddToCartAlert extends StatelessWidget {
                       width: kwidth * 0.05,
                     ),
                     Text(
-                      value.cost == 0 ? snapshot.data!['price'].toString() : value.cost.toString(),
+                      value.cost == 0
+                          ? numberformat.format(snapshot.data!['price'])
+                          : numberformat.format(value.cost),
                       style: GoogleFonts.inter(color: Colors.black),
                     )
                   ],
@@ -141,11 +144,11 @@ class AddToCartAlert extends StatelessWidget {
         style: ButtonStyle(
             fixedSize: MaterialStatePropertyAll(Size(kwidth * 0.5, kheight * 0.02)),
             backgroundColor: const MaterialStatePropertyAll(Colors.black),
-            shape: const MaterialStatePropertyAll(
-              ContinuousRectangleBorder(),
+            shape: MaterialStatePropertyAll(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             )),
         child: Text(
-          'Add to cart',
+          buynow ? 'BUY NOW' : 'Add to cart',
           style: GoogleFonts.inter(color: Colors.white, fontWeight: FontWeight.bold),
         ));
   }

@@ -1,6 +1,7 @@
 import 'package:audiohub/controllers/cart/cart.dart';
 import 'package:audiohub/controllers/checkout/address_selector.dart';
 import 'package:audiohub/controllers/checkout/payment_selector/payment_selector.dart';
+import 'package:audiohub/controllers/search/search_ctrl.dart';
 import 'package:audiohub/controllers/wishlist/wishlist_controller.dart';
 import 'package:audiohub/views/core/style.dart';
 import 'package:audiohub/views/splashscreen/splash_screen.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    kheight = MediaQuery.of(context).size.height;
+    kheight = MediaQuery.sizeOf(context).height;
     kwidth = MediaQuery.of(context).size.width;
     return MultiProvider(
       providers: [
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => AddressSelector(),
-        )
+        ),
       ],
       child: MaterialApp(
         theme: ThemeData(

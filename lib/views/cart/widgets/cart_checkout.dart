@@ -33,8 +33,13 @@ class CartCheckOut extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50),
-            child: Text('CHECKOUT',
-                style: GoogleFonts.inter(fontWeight: FontWeight.bold, color: Colors.black)),
+            child: Text(
+              'CHECKOUT',
+              style: GoogleFonts.inter(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
           ),
         ),
       ),

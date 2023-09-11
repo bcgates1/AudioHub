@@ -31,10 +31,11 @@ class ProductScrollingPart extends StatelessWidget {
               ),
               ProductDeliveryAndDetails(
                   brand: snapshot.data['brand'], connectionType: snapshot.data['connectionType']),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: kwidth * 0.05),
-                child: const ProductVarientsToLast(),
-              ),
+              SizedBox(height: kheight * 0.02),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: kwidth * 0.05),
+              //   child: const ProductVarientsToLast(),
+              // ),
             ],
           ),
         ),

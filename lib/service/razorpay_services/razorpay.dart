@@ -30,9 +30,9 @@ class RazorPayService {
     } else {
       final CartController cartItems = Provider.of<CartController>(context, listen: false);
       await CreateOrder().createorder(cartItems: cartItems, address: address);
-      await CartServices().clearCart();
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const OrderPlaced()));
     }
+    await CartServices().clearCart();
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const OrderPlaced()));
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -56,9 +56,9 @@ class RazorPayService {
       'name': 'AudioHub',
       'description': 'Payment for AudioHub',
       'prefill': {'email': 'bcemailid@gmail.com', 'contact': '1234567890'},
-      'external': {
-        'wallets': ['paytm']
-      }
+      'theme': {
+        'color': '#FFFFFF',
+      },
     };
     try {
       _razorpay.open(options);

@@ -6,7 +6,6 @@ import 'package:audiohub/views/profile/profile.dart';
 import 'package:audiohub/views/settings/settings.dart';
 import 'package:audiohub/views/wishlist/wishlist.dart';
 import 'package:flutter/material.dart';
-import 'dart:developer';
 
 class HomeDrawer extends StatelessWidget {
   const HomeDrawer({super.key});
@@ -37,7 +36,6 @@ class HomeDrawer extends StatelessWidget {
             ),
             DrawerTile(
                 ontap: () {
-                  log('pressed wishlist');
                   Navigator.of(context).pop();
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) => const WishlistScreen()));
@@ -46,7 +44,6 @@ class HomeDrawer extends StatelessWidget {
                 title: 'Wishlist'),
             DrawerTile(
                 ontap: () {
-                  log('pressed cart');
                   Navigator.of(context).pop();
                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Cart()));
                 },
@@ -54,17 +51,14 @@ class HomeDrawer extends StatelessWidget {
                 title: 'Cart'),
             DrawerTile(
                 ontap: () {
-                  log('pressed orders');
                   Navigator.of(context).pop();
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => const MyOrders()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyOrders()));
                 },
                 icon: const Icon(Icons.inventory),
                 title: 'Orders'),
             DrawerTile(
                 ontap: () {
                   Navigator.of(context).pop();
-                  log('pressed profile');
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) => const MyProfile()));
                 },
@@ -73,7 +67,6 @@ class HomeDrawer extends StatelessWidget {
             DrawerTile(
                 ontap: () {
                   Navigator.of(context).pop();
-                  log('pressed Settings');
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) => const Settings()));
                 },

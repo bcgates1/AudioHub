@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class MyOrders extends StatelessWidget {
-  const MyOrders({super.key});
+  MyOrders({super.key});
+  // final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +26,11 @@ class MyOrders extends StatelessWidget {
                 padding: EdgeInsets.only(top: kwidth * 0.05),
                 child: ListView.separated(
                   shrinkWrap: true,
+                  separatorBuilder: (context, index) => const Divider(),
+                  itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
-                    int length = snapshot.data![index]['orderItems'].length;
+                    int newIndex = snapshot.data!.length - index - 1;
+                    int length = snapshot.data![newIndex]['orderItems'].length;
 
                     return Padding(
                       padding: EdgeInsets.symmetric(
@@ -40,7 +44,7 @@ class MyOrders extends StatelessWidget {
                             height: kwidth * 0.2,
                             child: length == 1
                                 ? Image.network(
-                                    snapshot.data![index]['orderItems']['0']['image'],
+                                    snapshot.data![newIndex]['orderItems']['0']['image'],
                                     fit: BoxFit.cover,
                                   )
                                 : OverflowBox(
@@ -61,16 +65,16 @@ class MyOrders extends StatelessWidget {
                                 //to check if order is group order or not
                                 Text(
                                   length == 1
-                                      ? snapshot.data![index]['orderItems']['0']['name']
+                                      ? snapshot.data![newIndex]['orderItems']['0']['name']
                                       : 'Group Order',
                                 ),
                                 Text(
-                                  'Order# ${snapshot.data![index]['orderId']}',
+                                  'Order# ${snapshot.data![newIndex]['orderId']}',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 Text(
-                                  'Date: ${snapshot.data![index]['orderDateTime']}',
+                                  'Date: ${snapshot.data![newIndex]['orderDateTime']}',
                                 ),
                               ],
                             ),
@@ -83,7 +87,7 @@ class MyOrders extends StatelessWidget {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => OrderDetails(
                                           data: snapshot.data!,
-                                          mainIndex: index,
+                                          mainIndex: newIndex,
                                         )));
                               },
                               iconSize: 40,
@@ -96,9 +100,6 @@ class MyOrders extends StatelessWidget {
                       ),
                     );
                   },
-                  separatorBuilder: (context, index) => const Divider(),
-                  itemCount: snapshot.data!.length,
-                  reverse: true,
                 ),
               );
             } else {

@@ -43,7 +43,11 @@ class ItemCard extends StatelessWidget {
           Stack(
             children: [
               Image.network(
-                  width: kwidth * 0.5, height: kheight * 0.2, fit: BoxFit.fitHeight, imagepath),
+                width: kwidth * 0.5,
+                height: kheight * 0.2,
+                fit: BoxFit.fitHeight,
+                imagepath,
+              ),
               Positioned(
                 right: 0,
                 child: Consumer<WishListController>(

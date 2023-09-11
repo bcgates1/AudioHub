@@ -29,6 +29,12 @@ class FetchDataFirebase {
     return snapshot.data();
   }
 
+  static Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> fetchAllProduct() async {
+    final allProducts = await _firestore.collection(_collecionName).get();
+
+    return allProducts.docs;
+  }
+
   static CollectionReference<Map<String, dynamic>> allAddress =
       _firestore.collection('addresses').doc(WishListFirebase.uid).collection('addressList');
 
