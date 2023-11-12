@@ -9,6 +9,7 @@ import 'package:audiohub/utils/constants/app_constants.dart';
 import 'package:audiohub/views/checkout/order_placed.dart';
 import 'package:audiohub/views/checkout/widgets/payment_part.dart';
 import 'package:audiohub/views/checkout/widgets/scrolling_part.dart';
+import 'package:audiohub/views/common_widgets/alert_widgets.dart';
 import 'package:audiohub/views/common_widgets/appbar.dart';
 import 'package:audiohub/views/core/style.dart';
 import 'package:flutter/material.dart';
@@ -52,24 +53,28 @@ class CheckOutScrn extends StatelessWidget {
             SizedBox(height: kheight * 0.01),
             ElevatedButton(
               onPressed: () async {
-                if (paymentSelector.israzorpay) {
-                  razorPayService.razorpayCheckout(
-                    amount: buyNow ? (BuyNow.price! * BuyNow.quantity!) : cartController.totalPrice,
-                    isBuyNow: buyNow,
-                  );
+                final AddressSelector address =
+                    Provider.of<AddressSelector>(context, listen: false);
+                if (address.addressList.isEmpty) {
+                  toastMessage(message: 'Please add address');
                 } else {
-                  final AddressSelector address =
-                      Provider.of<AddressSelector>(context, listen: false);
-
-                  if (buyNow) {
-                    await CreateOrder().createorderBuyNow(address: address, cod: true);
+                  if (paymentSelector.israzorpay) {
+                    razorPayService.razorpayCheckout(
+                      amount:
+                          buyNow ? (BuyNow.price! * BuyNow.quantity!) : cartController.totalPrice,
+                      isBuyNow: buyNow,
+                    );
                   } else {
-                    await CreateOrder()
-                        .createorder(cartItems: cartController, address: address, cod: true);
-                    await CartServices().clearCart();
+                    if (buyNow) {
+                      await CreateOrder().createorderBuyNow(address: address, cod: true);
+                    } else {
+                      await CreateOrder()
+                          .createorder(cartItems: cartController, address: address, cod: true);
+                      await CartServices().clearCart();
+                    }
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) => const OrderPlaced()));
                   }
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => const OrderPlaced()));
                 }
               },
               style: ButtonStyle(

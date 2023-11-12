@@ -1,4 +1,5 @@
 import 'package:audiohub/service/firebase/authentication.dart';
+import 'package:audiohub/views/common_widgets/alert_widgets.dart';
 import 'package:audiohub/views/signup/signup_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -75,20 +76,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       const SizedBox(height: 10),
                       TextFieldWidget(
-                          userInputController: signupInputPassword,
-                          labelText: 'Enter your Password',
-                          isPassword: true,
-                          obscureText: true),
+                        userInputController: signupInputPassword,
+                        labelText: 'Enter your Password',
+                        isPassword: true,
+                        obscureText: true,
+                      ),
                       const TextWidget(
                         text: 'Confirm Password',
                       ),
                       const SizedBox(height: 10),
                       TextFieldWidget(
-                          userInputController: signupInputPasswordConfirm,
-                          labelText: 'Renter your Password',
-                          password: signupInputPassword.text.trim(),
-                          isConfirmPassword: true,
-                          obscureText: true),
+                        userInputController: signupInputPasswordConfirm,
+                        labelText: 'Renter your Password',
+                        password: signupInputPassword.text,
+                        isConfirmPassword: true,
+                        obscureText: true,
+                      ),
                     ],
                   ),
                 ),
@@ -101,12 +104,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(50)),
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
+                          loading(context: context);
                           Auth(context: context).signupwithemailid(
-                            email: signupInputEmail.text,
-                            password: signupInputPassword.text,
-                            username: signupInputName.text,
+                            email: signupInputEmail.text.trim(),
+                            password: signupInputPassword.text.trim(),
+                            username: signupInputName.text.trim(),
                           );
                         }
                       },

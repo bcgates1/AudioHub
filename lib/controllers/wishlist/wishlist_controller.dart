@@ -1,6 +1,7 @@
 import 'package:audiohub/service/firebase/wishlist_services.dart';
 import 'package:audiohub/views/common_widgets/alert_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class WishListController extends ChangeNotifier {
@@ -8,14 +9,18 @@ class WishListController extends ChangeNotifier {
 
   Future getWishList() async {
     try {
-      DocumentSnapshot wishlistSnapshot =
-          await FirebaseFirestore.instance.collection('wishlists').doc(WishListFirebase.uid).get();
+      DocumentSnapshot wishlistSnapshot = await FirebaseFirestore.instance
+          .collection('wishlists')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get();
 
       if (wishlistSnapshot.exists) {
         Map<String, dynamic>? wishlistData = wishlistSnapshot.data() as Map<String, dynamic>?;
         if (wishlistData != null) {
           wishList = wishlistData['products'];
         }
+      } else {
+        wishList = [];
       }
     } on FirebaseException catch (e) {
       toastMessage(message: e.message!);

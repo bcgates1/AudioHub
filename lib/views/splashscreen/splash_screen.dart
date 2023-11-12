@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:audiohub/controllers/wishlist/wishlist_controller.dart';
+import 'package:audiohub/service/firebase/notification_services.dart';
 import 'package:audiohub/views/home/main_home.dart';
 import 'package:audiohub/views/login/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -35,6 +36,7 @@ class SplashScreen extends StatelessWidget {
           if (context.mounted) {
             Navigator.of(context)
                 .pushReplacement(MaterialPageRoute(builder: (context) => const Home()));
+            await FirebaseNotificationServices.getDeviceToken();
           }
         } else {
           Navigator.of(context)

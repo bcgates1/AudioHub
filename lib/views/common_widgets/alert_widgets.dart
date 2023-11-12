@@ -38,7 +38,7 @@ snackbarMessage({required String message, required BuildContext context}) {
   );
 }
 
-loading(BuildContext context) {
+loading({required BuildContext context}) {
   return showDialog(
     context: context,
     barrierDismissible: true,

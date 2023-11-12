@@ -1,3 +1,4 @@
+import 'package:audiohub/service/firebase/fetchdata.dart';
 import 'package:audiohub/service/firebase/wishlist_services.dart';
 import 'package:audiohub/views/common_widgets/alert_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,7 +16,7 @@ class CartServices {
     try {
       await firestore
           .collection('cart')
-          .doc(WishListFirebase.uid)
+          .doc(FetchDataFirebase().uid)
           .collection('cartItems')
           .doc(productId)
           .set({
@@ -33,7 +34,7 @@ class CartServices {
     try {
       await firestore
           .collection('cart')
-          .doc(WishListFirebase.uid)
+          .doc(FetchDataFirebase().uid)
           .collection('cartItems')
           .doc(productId)
           .delete()
@@ -48,7 +49,7 @@ class CartServices {
       // await firestore.collection('cart').doc(WishListFirebase.uid).delete();
       await firestore
           .collection('cart')
-          .doc(WishListFirebase.uid)
+          .doc(FetchDataFirebase().uid)
           .collection('cartItems')
           .get()
           .then((snapshot) => snapshot.docs.forEach((doc) => doc.reference.delete()));

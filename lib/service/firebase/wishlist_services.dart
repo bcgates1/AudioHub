@@ -1,13 +1,11 @@
+import 'package:audiohub/service/firebase/fetchdata.dart';
 import 'package:audiohub/views/common_widgets/alert_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class WishListFirebase {
-  static String uid = FirebaseAuth.instance.currentUser!.uid;
-
   static final DocumentReference _wishlistRef =
-      FirebaseFirestore.instance.collection('wishlists').doc(uid);
+      FirebaseFirestore.instance.collection('wishlists').doc(FetchDataFirebase().uid);
 
   static addWishList({required String productId, required BuildContext context}) async {
     try {
@@ -23,9 +21,11 @@ class WishListFirebase {
         );
       } else {
         // If the document doesn't exist, create it with the initial array
-        await _wishlistRef.set({
-          'products': [productId],
-        });
+        await _wishlistRef.set(
+          {
+            'products': [productId],
+          },
+        );
       }
 
       return true;

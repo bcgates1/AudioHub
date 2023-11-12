@@ -1,4 +1,5 @@
 import 'package:audiohub/models/address_model.dart';
+import 'package:audiohub/service/firebase/fetchdata.dart';
 import 'package:audiohub/service/firebase/wishlist_services.dart';
 import 'package:audiohub/views/common_widgets/alert_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,7 +14,7 @@ class AddressServices {
     try {
       await _firestore
           .collection('addresses')
-          .doc(WishListFirebase.uid)
+          .doc(FetchDataFirebase().uid)
           .collection('addressList')
           .add(addressModel.tomap())
           .then(
@@ -31,7 +32,7 @@ class AddressServices {
     try {
       return await _firestore
           .collection('addresses')
-          .doc(WishListFirebase.uid)
+          .doc(FetchDataFirebase().uid)
           .collection('addressList')
           .doc(addressId)
           .delete()

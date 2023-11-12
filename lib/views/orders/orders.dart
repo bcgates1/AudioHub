@@ -49,7 +49,6 @@ class MyOrders extends StatelessWidget {
                                   )
                                 : OverflowBox(
                                     maxHeight: 200,
-                                    // maxWidth: 100,
                                     child: LottieBuilder.asset(
                                       'assets/lotties/order_group_cart.json',
                                     ),

@@ -37,12 +37,15 @@ class OrderPlaced extends StatelessWidget {
   }
 
   wait(BuildContext context) {
-    Timer(const Duration(milliseconds: 3000), () {
-      Navigator.pushAndRemoveUntil<void>(
-        context,
-        MaterialPageRoute<void>(builder: (BuildContext context) => const Home()),
-        ModalRoute.withName('/'),
-      );
-    });
+    Timer(
+      const Duration(milliseconds: 3000),
+      () {
+        Navigator.pushAndRemoveUntil<void>(
+          context,
+          MaterialPageRoute<void>(builder: (BuildContext context) => const Home()),
+          (Route<dynamic> route) => false,
+        );
+      },
+    );
   }
 }

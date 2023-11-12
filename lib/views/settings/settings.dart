@@ -4,6 +4,7 @@ import 'package:audiohub/views/core/style.dart';
 import 'package:audiohub/views/settings/widgets/settings_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:share/share.dart';
 
 class Settings extends StatelessWidget {
   const Settings({super.key});
@@ -20,7 +21,27 @@ class Settings extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             InkWell(
-              onTap: () {},
+              onTap: () {
+                showAboutDialog(
+                    context: context,
+                    applicationVersion: '1.0.0',
+                    applicationIcon: Image.asset(
+                      'assets/images/logo.png',
+                      fit: BoxFit.contain,
+                      height: kheight * 0.1,
+                      width: kwidth * 0.2,
+                    ),
+                    applicationLegalese: '© 2023 AudioHub',
+                    applicationName: 'AudioHub',
+                    children: [
+                      Text(
+                        'Made with ❤ by Bharath Chandran ',
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                    ]);
+              },
               child: const SettingsTiles(
                 icon: Icon(
                   Icons.info,
@@ -29,7 +50,9 @@ class Settings extends StatelessWidget {
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Share.share('check out my app https://example.com');
+              },
               child: const SettingsTiles(
                 icon: Icon(Icons.share),
                 text: 'Invite Friends',

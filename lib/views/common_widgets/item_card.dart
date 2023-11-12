@@ -6,14 +6,15 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ItemCard extends StatelessWidget {
-  ItemCard(
-      {super.key,
-      required this.imagepath,
-      required this.discount,
-      required this.price,
-      required this.name,
-      required this.category,
-      required this.productId});
+  ItemCard({
+    super.key,
+    required this.imagepath,
+    required this.discount,
+    required this.price,
+    required this.name,
+    required this.category,
+    required this.productId,
+  });
   final String name;
   final String imagepath;
   final int discount;
@@ -26,6 +27,7 @@ class ItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
         color: Colors.white,
         border: Border.all(
           color: Colors.grey,
@@ -42,11 +44,16 @@ class ItemCard extends StatelessWidget {
         children: [
           Stack(
             children: [
-              Image.network(
-                width: kwidth * 0.5,
-                height: kheight * 0.2,
-                fit: BoxFit.fitHeight,
-                imagepath,
+              ConstrainedBox(
+                constraints: BoxConstraints(minHeight: kheight * 0.2),
+                child: Center(
+                  child: Image.network(
+                    width: kwidth * 0.48,
+                    height: kheight * 0.19,
+                    fit: BoxFit.fitHeight,
+                    imagepath,
+                  ),
+                ),
               ),
               Positioned(
                 right: 0,

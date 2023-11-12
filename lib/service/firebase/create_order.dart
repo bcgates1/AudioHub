@@ -3,7 +3,7 @@ import 'package:audiohub/controllers/checkout/address_selector.dart';
 import 'package:audiohub/models/buy_now.dart';
 import 'package:audiohub/models/cart_model.dart';
 import 'package:audiohub/models/order_model.dart';
-import 'package:audiohub/service/firebase/wishlist_services.dart';
+import 'package:audiohub/service/firebase/fetchdata.dart';
 import 'package:audiohub/views/common_widgets/alert_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
@@ -29,7 +29,7 @@ class CreateOrder {
     Map orderItems = {};
 
     for (int i = 0; i < cartItems.cartQuantity.length; i++) {
-      Map<String, dynamic> itemData = CartQuatitySetter(cartItems: cartItems, index: i);
+      Map<String, dynamic> itemData = CartQuantitySetter(cartItems: cartItems, index: i);
       orderItems['$i'] = itemData;
     }
 
@@ -45,7 +45,8 @@ class CreateOrder {
     );
 
     try {
-      DocumentReference userOrderDocRef = _firestore.collection('orders').doc(WishListFirebase.uid);
+      DocumentReference userOrderDocRef =
+          _firestore.collection('orders').doc(FetchDataFirebase().uid);
 
       DocumentSnapshot userOrderSnapshot = await userOrderDocRef.get();
 
@@ -65,7 +66,7 @@ class CreateOrder {
     }
   }
 
-  Map<String, dynamic> CartQuatitySetter({required CartController cartItems, required int index}) {
+  Map<String, dynamic> CartQuantitySetter({required CartController cartItems, required int index}) {
     CartModel cartModel = CartModel(
       name: cartItems.allProduct['$index']['name'],
       price: cartItems.allProduct['$index']['price'],
@@ -95,7 +96,8 @@ class CreateOrder {
     );
 
     try {
-      DocumentReference userOrderDocRef = _firestore.collection('orders').doc(WishListFirebase.uid);
+      DocumentReference userOrderDocRef =
+          _firestore.collection('orders').doc(FetchDataFirebase().uid);
 
       DocumentSnapshot userOrderSnapshot = await userOrderDocRef.get();
 

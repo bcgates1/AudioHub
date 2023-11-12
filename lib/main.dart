@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     kheight = MediaQuery.sizeOf(context).height;
-    kwidth = MediaQuery.of(context).size.width;
+    kwidth = MediaQuery.sizeOf(context).width;
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
