@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FetchDataFirebase {
-   String uid = FirebaseAuth.instance.currentUser!.uid;
+  String uid = FirebaseAuth.instance.currentUser!.uid;
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   static const String _collecionName = 'products';
@@ -49,7 +49,6 @@ class FetchDataFirebase {
       DocumentSnapshot<Map<String, dynamic>> allOrder =
           await _firestore.collection('orders').doc(FetchDataFirebase().uid).get();
 
-      // final allOrder = await userOrderDocRef.get();
       if (allOrder.exists) {
         return allOrder['orderLists'];
       }

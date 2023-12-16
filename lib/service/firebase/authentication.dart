@@ -39,6 +39,7 @@ class Auth {
     } on FirebaseException catch (e) {
       toastMessage(message: e.message.toString());
       Navigator.of(context).pop();
+      // Navigator.pop(context);
     }
   }
 

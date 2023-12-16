@@ -11,7 +11,7 @@ class CartController extends ChangeNotifier {
 
   Future increment({required int index}) async {
     cartQuantity[index]['quantity']++;
-    await findtotal();
+    await findtotalPrice();
 
     notifyListeners();
   }
@@ -19,7 +19,7 @@ class CartController extends ChangeNotifier {
   Future decrement({required int index}) async {
     if (cartQuantity[index]['quantity'] > 1) {
       cartQuantity[index]['quantity']--;
-      await findtotal();
+      await findtotalPrice();
       notifyListeners();
     }
   }
@@ -31,7 +31,7 @@ class CartController extends ChangeNotifier {
       for (int i = 0; i < snapshot.docs.length; i++) {
         cartQuantity[i] = snapshot.docs[i].data();
       }
-      await findtotal();
+      await findtotalPrice();
       return false;
     }
     return true;
@@ -43,7 +43,7 @@ class CartController extends ChangeNotifier {
     notifyListeners();
   }
 
-  findtotal() async {
+  findtotalPrice() async {
     totalPrice = 0;
     for (int i = 0; i < cartQuantity.length; i++) {
       final data = await FetchDataFirebase.fetchProductWithId(

@@ -14,85 +14,83 @@ class ProductDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppbarCom(
-          title: 'Product',
-          action: [
-            Consumer<WishListController>(
-              builder: (ctx, value, child) => IconButton(
-                onPressed: () async {
-                  if (!value.wishList.contains(productId)) {
-                    await value.addWishList(productId: productId, context: context);
-                  } else {
-                    await value.deleteWishList(productId: productId, context: context);
-                  }
-                },
-                icon: value.wishList.contains(productId)
-                    ? const Icon(
-                        Icons.favorite,
-                        size: 28,
-                        color: Color.fromARGB(255, 216, 76, 66),
-                      )
-                    : const Icon(
-                        Icons.favorite_border,
-                        size: 28,
-                        color: Colors.black,
-                      ),
-              ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppbarCom(
+        title: 'Product',
+        action: [
+          Consumer<WishListController>(
+            builder: (ctx, value, child) => IconButton(
+              onPressed: () async {
+                if (!value.wishList.contains(productId)) {
+                  await value.addWishList(productId: productId, context: context);
+                } else {
+                  await value.deleteWishList(productId: productId, context: context);
+                }
+              },
+              icon: value.wishList.contains(productId)
+                  ? const Icon(
+                      Icons.favorite,
+                      size: 28,
+                      color: Color.fromARGB(255, 216, 76, 66),
+                    )
+                  : const Icon(
+                      Icons.favorite_border,
+                      size: 28,
+                      color: Colors.black,
+                    ),
             ),
-          ],
-        ),
-        body: FutureBuilder(
-            future: FetchDataFirebase.fetchProductWithId(productId: productId),
-            builder: (context, snapshot) => snapshot.hasData
-                ? Column(
-                    children: [
-                      ProductScrollingPart(
-                        snapshot: snapshot,
-                      ),
-                      SizedBox(
-                        height: kheight * 0.08,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => AddToCartAlert(
-                                    snapshot: snapshot,
-                                    productId: productId,
-                                    buynow: true,
-                                  ),
-                                );
-                              },
-                              style: _buttonstyle(),
-                              child: _buttonchild('BUY NOW'),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => AddToCartAlert(
-                                    snapshot: snapshot,
-                                    productId: productId,
-                                  ),
-                                );
-                              },
-                              style: _buttonstyle(),
-                              child: _buttonchild('ADD TO CART'),
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  )
-                : const Center(
-                    child: CircularProgressIndicator(),
-                  )),
+          ),
+        ],
       ),
+      body: FutureBuilder(
+          future: FetchDataFirebase.fetchProductWithId(productId: productId),
+          builder: (context, snapshot) => snapshot.hasData
+              ? Column(
+                  children: [
+                    ProductScrollingPart(
+                      snapshot: snapshot,
+                    ),
+                    SizedBox(
+                      height: kheight * 0.08,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AddToCartAlert(
+                                  snapshot: snapshot,
+                                  productId: productId,
+                                  buynow: true,
+                                ),
+                              );
+                            },
+                            style: _buttonstyle(),
+                            child: _buttonchild('BUY NOW'),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AddToCartAlert(
+                                  snapshot: snapshot,
+                                  productId: productId,
+                                ),
+                              );
+                            },
+                            style: _buttonstyle(),
+                            child: _buttonchild('ADD TO CART'),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              : const Center(
+                  child: CircularProgressIndicator(),
+                )),
     );
   }
 

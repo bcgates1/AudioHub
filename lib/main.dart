@@ -1,7 +1,6 @@
 import 'package:audiohub/controllers/cart/cart.dart';
 import 'package:audiohub/controllers/checkout/address_selector.dart';
 import 'package:audiohub/controllers/checkout/payment_selector/payment_selector.dart';
-import 'package:audiohub/controllers/search/search_ctrl.dart';
 import 'package:audiohub/controllers/wishlist/wishlist_controller.dart';
 import 'package:audiohub/views/core/style.dart';
 import 'package:audiohub/views/splashscreen/splash_screen.dart';
@@ -12,6 +11,7 @@ import 'package:provider/provider.dart';
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   runApp(const MyApp());
 }
 

@@ -43,19 +43,15 @@ class TextFieldWidget extends StatelessWidget {
         ),
       ),
       validator: (value) {
-        if (value == null) {
-          return 'Please enter some text';
-        }
+        if (value == null) return 'Please enter some text';
+
         value = value.trim();
-        if (isName) {
-          return Validation().nameValidation(value);
-        } else if (isemail) {
-          return Validation().emailValidation(value);
-        } else if (isPassword) {
-          return Validation().passwordValidation(value);
-        } else if (isConfirmPassword) {
-          return Validation().confirmPassword(value, password!);
-        }
+
+        if (isName) return Validation().nameValidation(value);
+        if (isemail) return Validation().emailValidation(value);
+        if (isPassword) return Validation().passwordValidation(value);
+        if (isConfirmPassword) return Validation().confirmPassword(value, password!);
+
         return null;
       },
     );
